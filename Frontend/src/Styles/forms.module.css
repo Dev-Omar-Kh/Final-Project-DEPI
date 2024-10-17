@@ -1,0 +1,411 @@
+.form_cont{
+
+    width: 100%;
+
+}
+
+.form{
+
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+
+.form_title{
+
+    width: 100%;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 35px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--first-text-color);
+
+}
+
+.icon{
+
+    color: var(--active-color);
+
+}
+
+.input_cont{
+
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+.half_input_cont{
+
+    width: calc(50% - 10px) !important;
+
+}
+
+.input_cont label{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.label{
+
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--first-text-color);
+
+}
+
+.label_err {
+
+    font-size: 12px;
+    color: var(--error-color);
+
+}
+
+.file_span{
+
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    border: 2px dashed var(--active-color);
+    cursor: pointer;
+
+}
+
+.file_span p , .file_span div{
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 18px;
+    color: var(--active-color);
+    text-align: center;
+
+}
+
+.file_span p svg{
+
+    font-size: 20px;
+
+}
+
+.book_img_view{
+
+    width: 100%;
+    height: 60px;
+
+}
+
+.book_img_view img{
+
+    height: 100%;
+    border-radius: 5px;
+
+}
+
+.input_cont input , .input_cont textarea{
+
+    width: 100%;
+    height: 40px;
+    padding: 0px 10px;
+    font-size: 16px;
+    color: var(--first-text-color);
+    border-radius: 5px;
+    outline: none;
+    border: 2px solid var(--active-color);
+    background-color: transparent;
+    transition: 0.3s;
+
+}
+
+.input_cont input::-webkit-input-placeholder , .input_cont textarea::-webkit-input-placeholder{
+
+    color: var(--first-text-color);
+    opacity: 0.7;
+
+}
+
+.input_cont textarea{
+
+    height: 100px;
+    padding: 10px;
+    font-family: "Roboto", system-ui;
+    resize: none;
+
+}
+
+.input_cont textarea::-webkit-scrollbar{
+
+    display: none;
+
+}
+
+.book_img {
+
+    display: none !important;
+
+}
+
+/* === loader === */
+
+.loader {
+
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+    width: 20px;
+    height: 10px;
+    background: linear-gradient(var(--active-color) calc(1 * 100% / 6),
+            transparent 0 calc(3 * 100% / 6),
+            var(--active-color) 0),
+        linear-gradient(var(--active-color) calc(2 * 100% / 6),
+            transparent 0 calc(4 * 100% / 6),
+            var(--active-color) 0),
+        linear-gradient(var(--active-color) calc(3 * 100% / 6),
+            transparent 0 calc(5 * 100% / 6),
+            var(--active-color) 0);
+    background-size: 5px 400%;
+    background-repeat: no-repeat;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+
+}
+
+@keyframes matrix {
+    0% {
+        background-position: 0% 100%, 50% 100%, 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%, 50% 0%, 100% 0%;
+    }
+}
+
+.eyes_cont {
+
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    height: 40px;
+    cursor: pointer;
+
+}
+
+.eyes_cont span {
+
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.eyes_cont span svg {
+
+    font-size: 24px;
+    color: var(--active-color);
+
+}
+
+.input_cont:focus-within .loader {
+
+    opacity: 1;
+    visibility: visible;
+    animation: matrix 1s infinite linear;
+
+}
+
+.radio_btns {
+
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.radio_sec {
+
+    display: flex;
+    gap: 20px;
+
+}
+
+.radio_buttons_container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.radio_button {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.radio_button__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio_button__label {
+    display: inline-block;
+    padding-left: 25px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--first-text-color);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.radio_button__custom {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--first-text-color);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.radio_button__input:checked+.radio_button__label .radio_button__custom {
+    transform: translateY(-50%) scale(0.9);
+    border: 5px solid var(--active-color);
+    color: var(--active-color);
+}
+
+
+.radio_button__label:hover .radio_button__custom {
+    transform: translateY(-50%) scale(1.1);
+    border-color: var(--active-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form_link {
+
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: underline;
+    color: var(--first-text-color);
+
+}
+
+.submit{
+
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--first-color);
+    border: none;
+    border-radius: 5px;
+    background-color: var(--active-color);
+    cursor: pointer;
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 990px){
+
+    .form{
+
+        gap: 10px;
+
+    }
+
+    .half_input_cont{
+
+        width: calc(50% - 5px) !important;
+
+    }
+
+}
+
+@media(max-width: 570px){
+
+    .half_input_cont{
+
+        width: 100% !important;
+
+    }
+
+    .label_err {
+
+        font-size: 10px !important;
+
+    }
+
+}
+
+@media(max-width: 365px){
+
+    .form_title{
+
+        font-size: 30px;
+        padding-bottom: 15px;
+
+    }
+
+    .label{
+
+        font-size: 14px;
+
+    }
+
+    .file_span p{
+
+        font-size: 16px;
+
+    }
+
+    .file_span p svg{
+
+        font-size: 18px;
+
+    }
+
+    .input_cont input{
+
+        font-size: 14px;
+
+    }
+
+    .form_link{
+
+        font-size: 14px;
+
+    }
+
+    .submit{
+
+        font-size: 14px;
+
+    }
+
+}

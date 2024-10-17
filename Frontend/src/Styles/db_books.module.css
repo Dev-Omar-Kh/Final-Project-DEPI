@@ -1,0 +1,195 @@
+.container{
+
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+
+.container::-webkit-scrollbar{
+
+    display: none;
+
+}
+
+.card{
+
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-block: 1px solid var(--active-color);
+
+}
+
+.actions{
+
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.actions button , .actions a{
+
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--active-color);
+    border: 1px solid var(--active-color);
+    border-radius: 50%;
+    background-color: var(--first-color);
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+
+.actions button:hover , .actions a:hover{
+
+    background-color: var(--active-color);
+    color: var(--first-color);
+
+}
+
+.book_img{
+
+    width: 150px;
+
+}
+
+.book_img img{
+
+    width: 100%;
+    border-radius: 5px;
+
+}
+
+.book_det{
+
+    width: calc(100% - 170px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.book_name{
+
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--first-text-color);
+
+}
+
+.book_author{
+
+    font-size: 14px;
+    color: var(--first-text-color);
+    opacity: 0.8;
+
+}
+
+.book_des{
+
+    padding: 10px 0px;
+    font-size: 14px;
+    color: var(--first-text-color);
+    font-style: italic;
+    border-block: 1px solid var(--bg-opacity);
+    opacity: 0.8;
+
+}
+
+.book_price{
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.new_price{
+
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--first-text-color);
+
+}
+
+.new_price span{
+
+    padding: 0px 5px;
+    color: var(--active-color);
+
+}
+
+.old_price{
+
+    font-size: 14px;
+    text-decoration: line-through;
+    color: var(--first-text-color);
+    opacity: 0.6;
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 600px){
+
+    .book_img{
+
+        width: 250px;
+
+    }
+
+    .book_det{
+
+        width: calc(100% - 270px);
+
+    }
+
+    .book_des{
+
+        font-size: 12px;
+
+    }
+
+}
+
+@media(max-width: 530px){
+
+    .card{
+
+        padding: 10px;
+        flex-direction: column;
+        border-radius: 5px;
+        border: 1px solid var(--active-color);
+
+    }
+
+    .book_det{
+
+        width: 100%;
+
+    }
+
+    .book_des{
+
+        font-size: 14px;
+
+    }
+
+}

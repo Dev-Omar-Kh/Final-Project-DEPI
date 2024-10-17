@@ -1,0 +1,99 @@
+.container{
+
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+
+.card{
+
+    width: calc(100% / 3 - calc(20px - calc(20px / 3)));
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--active-color);
+
+}
+
+.order_info{
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--active-color);
+
+}
+
+.order_info p span{
+
+    color: var(--first-text-color);
+
+}
+
+.order_det{
+
+    padding: 10px 0px;
+    font-size: 14px;
+    color: var(--first-text-color);
+    border-block: 1px solid var(--bg-opacity);
+
+}
+
+.action{
+
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.action button{
+
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    color: var(--error-color);
+    border-radius: 5px;
+    border: 1px solid var(--error-color);
+    background-color: var(--first-color);
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+
+.action button:hover{
+
+    color: var(--first-color);
+    background-color: var(--error-color);
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 980px){
+
+    .card{
+
+        width: calc(50% - 10px);
+
+    }
+
+}
+
+@media(max-width: 750px){
+
+    .card{
+
+        width: 100%;
+
+    }
+
+}

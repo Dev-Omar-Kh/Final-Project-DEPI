@@ -1,0 +1,116 @@
+.container{
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100svh;
+    padding: 0px 4.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-opacity);
+    z-index: 110;
+
+}
+
+.warn_msg{
+
+    width: fit-content;
+    max-width: 30%;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: var(--first-color);
+
+}
+
+.title{
+
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--first-text-color);
+
+}
+
+.title_icon{
+
+    font-size: 24px;
+    color: var(--active-color);
+
+}
+
+.msg_text{
+
+    padding: 10px 5px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--first-text-color);
+    border-block: 1px solid var(--bg-opacity);
+
+}
+
+.msg_text p span{
+
+    color: var(--error-color);
+    text-transform: capitalize;
+
+}
+
+.actions{
+
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+
+}
+
+.actions button{
+
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+
+}
+
+.delete{
+
+    color: var(--first-color);
+    background: var(--error-color);
+
+}
+
+.cancel{
+
+    color: var(--first-color);
+    background: var(--active-color);
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 1125px){
+
+    .warn_msg{
+
+        max-width: 60%;
+
+    }
+
+}
+
+@media(max-width: 610px){
+
+    .warn_msg{
+
+        max-width: 100%;
+
+    }
+
+}

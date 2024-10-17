@@ -1,0 +1,46 @@
+.categories_cont{
+
+    width: 100%;
+    margin-top: 50px;
+    overflow: auto;
+
+}
+
+.cate_box{
+
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+.categories_cont::-webkit-scrollbar{
+
+    display: none;
+
+}
+
+.categories_cont .cate{
+
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--first-text-color);
+    border: none;
+    border-radius: 20px;
+    background-color: var(--bg-opacity);
+    transition: 0.3s;
+    cursor: pointer;
+
+}
+
+.active , .cate:hover{
+
+    color: var(--first-color) !important;
+    background-color: var(--active-color) !important;
+
+}

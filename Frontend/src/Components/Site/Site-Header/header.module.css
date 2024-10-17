@@ -1,0 +1,358 @@
+.container{
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--first-color);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: top 0.3s ease;
+    z-index: 100;
+
+}
+
+/* ====== top-header-style ====== */
+
+.top_header , .header{
+
+    width: 100%;
+    padding: 10px 4.5%;
+    display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+}
+
+.top_header{
+
+    padding: 5px 4.5%;
+
+}
+
+.top_header{
+
+    border-bottom: 1px solid var(--third-color);
+
+}
+
+.social_icons , .user_info{
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.social_icons{
+
+    gap: 5px !important;
+
+}
+
+.social_icons a{
+
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--first-text-color);
+    transition: 0.3s;
+
+}
+
+.social_icons a:hover{
+
+    color: var(--active-color);
+
+}
+
+.user_info_box{
+
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--first-text-color);
+    font-size: 18px;
+    border-radius: 5px;
+    transition: 0.3s;
+    cursor: pointer;
+
+}
+
+.user_info_box p{
+
+    font-size: 16px;
+
+}
+
+.user_info_box:hover{
+
+    background-color: var(--active-color);
+    color: var(--first-color);
+
+}
+
+.line{
+
+    height: 40px;
+    width: 1px;
+    border-radius: 25px;
+    border: 1px solid var(--third-color);
+    display: none;
+
+}
+
+/* ====== header-style ====== */
+
+.logo{
+
+    height: 80px;
+
+}
+
+.logo img{
+
+    height: 100%;   
+
+}
+
+/* === nav-phone === */
+
+.nav_ph {
+
+    position: relative;
+    width: 30px;
+    height: 18px;
+    display: none;
+    transition: 0.3s;
+
+}
+
+.nav_ph .nav_span {
+
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    display: inline-block;
+    border-radius: 25px;
+    border: 2px solid var(--third-color);
+    background-color: var(--third-color);
+
+}
+
+.nav_ph .nav_span:nth-child(1) {
+
+    top: 0px;
+    left: 0;
+    transition: 0.3s;
+
+}
+
+.nav_ph .nav_span:nth-child(2) {
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+
+}
+
+.nav_ph .nav_span:nth-child(3) {
+
+    bottom: 0px;
+    left: 0;
+    transition: 0.3s;
+
+}
+
+.change {
+
+    rotate: 180deg;
+
+}
+
+.change .nav_span:nth-child(1) {
+
+    top: 50%;
+    left: 0px;
+    rotate: -45deg;
+
+}
+
+.change .nav_span:nth-child(2) {
+
+    opacity: 0;
+    left: -100%;
+
+}
+
+.change .nav_span:nth-child(3) {
+
+    top: 50%;
+    left: 0;
+    rotate: 45deg;
+
+}
+
+.nav{
+
+    background-color: var(--first-color);
+
+}
+
+.nav ul{
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+nav ul a{
+
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 18px;
+    color: var(--first-text-color);
+    border-radius: 5px;
+    transition: 0.3s;
+
+}
+
+nav ul a:hover{
+
+    background-color: var(--active-color);
+    color: var(--first-color);
+
+}
+
+nav ul a li{
+
+    font-size: 16px;
+
+}
+
+/* ====== top-header-responsive-design ====== */
+
+@media(max-width: 750px){
+
+    .social_icons , .user_info{
+
+        gap: 5px;
+
+    }
+
+    .social_icons a{
+
+        font-size: 14px;
+
+    }
+
+    .user_info_box{
+
+        padding: 10px;
+        font-size: 16px;
+
+    }
+
+    .user_info_box p{
+
+        font-size: 14px;
+
+    }
+
+}
+
+@media(max-width: 455px){
+
+    .line{
+
+        display: block;
+
+    }
+
+    .social_icons a {
+
+        font-size: 16px;
+
+    }
+
+    .user_info_box {
+
+        padding: 10px;
+        font-size: 18px;
+
+    }
+
+    .user_info_box p {
+
+        display: none;
+        font-size: 16px;
+
+    }
+
+}
+
+/* ====== header-responsive-style ====== */
+
+@media(max-width: 900px){
+
+    .nav ul a{
+
+        padding: 10px;
+
+    }
+
+}
+
+@media(max-width: 771px){
+
+    .nav_ph{
+
+        display: block;
+
+    }
+
+    .nav{
+
+        position: fixed;
+        left: 0;
+        width: 100%;
+        padding: 50px 4.5%;
+        transform: translateY(-10px);
+        visibility: hidden;
+        opacity: 0;
+        transition: 0.3s;
+        z-index: 101;
+
+    }
+
+    .display_nav{
+
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0px);
+
+    }
+
+    .nav ul{
+
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+
+    }
+
+    .nav ul a{
+
+        width: 100%;
+        padding: 15px;
+
+    }
+
+}

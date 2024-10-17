@@ -1,0 +1,146 @@
+.container {
+
+    width: 100%;
+    padding: 50px 4.5%;
+
+}
+
+.title {
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.line {
+
+    width: 30%;
+    height: 1px;
+    border-radius: 20px;
+    border: 1px solid var(--seconde-color);
+    opacity: 0.5;
+
+}
+
+.title h3 {
+
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--first-text-color);
+
+}
+
+.categories_cont {
+
+    width: 100%;
+    margin-top: 50px;
+    overflow: auto;
+
+}
+
+.cate_box {
+
+    width: fit-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+}
+
+.categories_cont::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+.categories_cont .cate {
+
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--first-text-color);
+    border: none;
+    border-radius: 20px;
+    background-color: var(--bg-opacity);
+    transition: 0.3s;
+    cursor: pointer;
+
+}
+
+.active,
+.cate:hover {
+
+    color: var(--first-color) !important;
+    background-color: var(--active-color) !important;
+
+}
+
+.link {
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.link a {
+
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 18px;
+    color: var(--active-color);
+    border-radius: 5px;
+    border: 1px solid var(--active-color);
+    background-color: transparent;
+    transition: 0.3s;
+
+}
+
+.link a:hover {
+
+    gap: 15px;
+    color: var(--first-color);
+    background-color: var(--active-color);
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 1000px){
+
+    .line{
+
+        width: 10%;
+
+    }
+
+}
+
+@media(max-width: 510px){
+
+    .title h3{
+
+        margin: auto;
+        padding: 10px;
+        font-size: 28px;
+        text-align: center;
+        border-bottom: 1px solid var(--seconde-color);
+
+    }
+
+    .line{
+
+        display: none;
+
+    }
+
+}

@@ -1,0 +1,57 @@
+.container{
+
+    width: 100%;
+    margin: 30px 0px;
+    padding: 50px 4.5%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--forth-color);
+
+}
+
+.sponsors_card{
+
+    width: calc(100% / 5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    will-change: transform, opacity;
+
+}
+
+.sponsors_card img{
+
+    width: 80%;
+
+}
+
+.placeholder{
+
+    width: 80%;
+    height: 200px;
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 800px){
+
+    .sponsors_card{
+
+        width: calc(100% / 3);
+
+    }
+
+}
+
+@media(max-width: 500px){
+
+    .sponsors_card{
+
+        width: calc(100% / 2);
+
+    }
+
+}

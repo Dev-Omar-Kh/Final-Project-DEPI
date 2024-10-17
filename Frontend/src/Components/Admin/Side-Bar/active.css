@@ -1,0 +1,6 @@
+.side_bar_links.active {
+
+    color: var(--first-color);
+    background-color: var(--active-color);
+
+}

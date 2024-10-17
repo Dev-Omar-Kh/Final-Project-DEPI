@@ -1,0 +1,158 @@
+.container{
+
+    width: 100%;
+    padding: 30px 4.5%;
+    margin: 50px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    background-color: var(--forth-color);
+
+}
+
+.title{
+
+    width: fit-content;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 5px;
+
+}
+
+.title p{
+
+    font-size: 40px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--first-text-color);
+
+}
+
+.title span{
+
+    width: 50px;
+    height: 1px;
+    border-radius: 20px;
+    border: 2px solid var(--active-color);
+    background-color: var(--active-color);
+
+}
+
+.form{
+
+    width: fit-content;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+}
+
+.form p{
+
+    max-width: 400px;
+    font-size: 16px;
+    color: var(--first-text-color);
+    opacity: 0.8;
+
+}
+
+.form_card{
+
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* border-radius: 5px; */
+    border-bottom: 1px solid var(--active-color);
+
+}
+
+.form_card input{
+
+    width: 85%;
+    padding: 0px 10px;
+    font-size: 16px;
+    color: var(--first-text-color);
+    border: none;
+    outline: none;
+    background-color: transparent;
+
+}
+
+.form_card input::-webkit-input-placeholder{
+
+    color: var(--first-text-color);
+    opacity: 0.6;
+
+}
+
+.form_card button{
+
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--active-color);
+    color: var(--first-color);
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 830px){
+
+    .container{
+
+        flex-direction: column;
+        gap: 30px;
+
+    }
+
+    .title{
+
+        min-width: 100%;
+        align-items: center;
+
+    }
+
+    .form{
+
+        min-width: 100%;
+        align-items: center;
+        gap: 15px;
+
+    }
+
+    .form p{
+
+        width: 80%;
+        text-align: center;
+
+    }
+
+    .form_card{
+
+        width: 80%;
+
+    }
+
+}
+
+@media(max-width: 510px){
+
+    .form p , .form_card{
+
+        width: 100%;
+
+    }
+
+}
