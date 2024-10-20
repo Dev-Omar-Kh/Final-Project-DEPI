@@ -1,33 +1,61 @@
 import React, { useEffect, useState } from 'react';
 
 import commonCSS from '../../../Styles/home_common.module.css';
-import FakeDataBooks from '../../../FakeDataBooks';
+import errorHandleCSS from '../../../Styles/db_tables.module.css';
 import Products from '../../../Components/Site/Products/Products';
 import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllBooks } from '../../../Store/BookSlice';
+import { ThreeCircles } from 'react-loader-spinner';
+import { BiErrorAlt } from 'react-icons/bi';
 
 export default function Books() {
 
-    // ====== get-categories ====== //
+    // ====== get-data ====== //
 
-    const categories = FakeDataBooks.map(book => book.category);
+    const [filteredData, setFilteredData] = useState(null);
+    const [uniqueCategories, setUniqueCategories] = useState(null);
 
-    const uniqueCategories = [...new Set(categories)];
+    const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
+
+    const disPatch = useDispatch()
+
+    useEffect(() => {
+
+        disPatch(getAllBooks());
+
+    } , [disPatch]);
+
+    useEffect(() => {
+
+        if(bookData?.data){
+
+            const categories = bookData.data.map(book => book.category);
+            setUniqueCategories([...new Set(categories)]);
+
+            setFilteredData(bookData.data);
+
+        }
+
+    }, [bookData]);
 
     // ====== get-single-category ====== //
 
     const [category, setCategory] = useState(null);
-    const [booksData, setBooksData] = useState(FakeDataBooks);
+
 
     useEffect(() => {
 
         if(category){
-            setBooksData(FakeDataBooks.filter(book => book.category === category));
+            setFilteredData(bookData?.data.filter(book => book.category === category));
         }
         else{
-            setBooksData(FakeDataBooks);
+            setFilteredData(bookData?.data);
         }
 
-    } , [category]);
+    } , [category , bookData]);
+
+    // ====== framer-motion ====== //
 
     const cateVariants = {
 
@@ -37,9 +65,32 @@ export default function Books() {
 
     }
 
+    if(!filteredData){
+
+        return <React.Fragment>
+
+            <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                <ThreeCircles
+                    visible={true} height="50" width="50" color="var(--active-color)"
+                    ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                />
+            </div>
+
+        </React.Fragment>
+
+    }
+
     return <React.Fragment>
 
-        <div className={commonCSS.container}>
+        {bookLoading ? <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+            <ThreeCircles
+                visible={true} height="50" width="50" color="var(--active-color)"
+                ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+            />
+        </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
+            <BiErrorAlt />
+            <h3>Error on fetch books</h3>
+        </div> : <div className={commonCSS.container}>
 
             <motion.div 
                 variants={cateVariants} 
@@ -70,9 +121,9 @@ export default function Books() {
 
             </motion.div>
 
-            <Products category={category} data={booksData} />
+            <Products category={category} data={filteredData} />
 
-        </div>
+        </div>)}
 
     </React.Fragment>
 

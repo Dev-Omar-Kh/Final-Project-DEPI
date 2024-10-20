@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Header from '../Components/Site/Site-Header/Header';
 import Footer from '../Components/Site/Site-Footer/Footer'
+import DashBoardLink from '../Site/Pages/Home/Dashboard-Link/DahBoardLink';
 
 export default function SiteLayout() {
 
@@ -28,6 +29,8 @@ export default function SiteLayout() {
         <Outlet context={headerHeight} />
 
         <Footer />
+
+        <DashBoardLink />
 
     </React.Fragment>
 

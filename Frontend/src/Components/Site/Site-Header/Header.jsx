@@ -13,8 +13,13 @@ import { GrArticle } from "react-icons/gr";
 
 import headerCSS from './header.module.css';
 import './active.css';
+import Cookies from 'js-cookie';
 
 export default function Header({height}) {
+
+    // ====== get-token-from-cookies ====== //
+
+    const token = Cookies.get('token');
 
     // ====== handel-height-nav-on-phone-view ====== //
 
@@ -174,19 +179,19 @@ export default function Header({height}) {
 
                 <div className={headerCSS.user_info}>
 
-                    <Link to={'/register'} className={headerCSS.user_info_box}>
+                    <NavLink id='top_header' to={token ? '/profile' : '/register'} className={headerCSS.user_info_box}>
 
                         <FaRegUser className={headerCSS.info_icon} />
                         <p>Account</p>
 
-                    </Link>
+                    </NavLink>
 
-                    <div className={headerCSS.user_info_box}>
+                    <NavLink id='top_header' to={'cart'} className={headerCSS.user_info_box}>
 
                         <MdOutlineShoppingBag className={headerCSS.info_icon} />
                         <p>Cart</p>
 
-                    </div>
+                    </NavLink>
 
                     <div onClick={() => setViewSearch(true)} className={headerCSS.user_info_box}>
 

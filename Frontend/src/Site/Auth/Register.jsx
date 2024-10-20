@@ -52,9 +52,9 @@ export default function Register() {
 
         } catch (error) {
             setErrMsg(error.response.data.message);
+        }finally{
+            setLoading(false);
         }
-
-        setLoading(false);
 
     }
 

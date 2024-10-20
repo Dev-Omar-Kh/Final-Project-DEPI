@@ -7,6 +7,7 @@ import sideCSS from './sidebar.module.css';
 import './active.css'
 import { PiBooksFill } from 'react-icons/pi';
 import { GrArticle } from 'react-icons/gr';
+import { IoHome } from 'react-icons/io5';
 // import { MdOutlineMessage, MdOutlineShoppingBag } from 'react-icons/md';
 
 export default function SideBar({display}) {
@@ -51,6 +52,11 @@ export default function SideBar({display}) {
                 </ul>
 
             </nav>
+
+            <Link to={'/'} className={sideCSS.home_link}>
+                <IoHome className={sideCSS.side_bar_icon} />
+                <span>Home</span>
+            </Link>
 
         </div>
 

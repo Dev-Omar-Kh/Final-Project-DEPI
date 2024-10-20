@@ -7,9 +7,11 @@ import { Link } from 'react-router-dom';
 
 import titleCSS from '../../../Styles/db_title.module.css';
 import booksCSS from '../../../Styles/db_books.module.css';
+import errorHandleCSS from '../../../Styles/db_tables.module.css';
 import { Axios, BookGetAll } from '../../../API/Api';
 import { useQuery } from 'react-query';
 import { ThreeCircles } from 'react-loader-spinner';
+import { BiErrorAlt } from 'react-icons/bi';
 
 export default function BooksList() {
 
@@ -21,7 +23,7 @@ export default function BooksList() {
 
     }
 
-    const {data , isLoading , refetch} = useQuery('getAllBooks' , getAllBooks);
+    const {data , isLoading , isError , refetch} = useQuery('getAllBooks' , getAllBooks);
 
     return <React.Fragment>
 
@@ -52,11 +54,25 @@ export default function BooksList() {
                         ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
                     />
 
-                </div> :<div className={booksCSS.container}>
+                </div> : (isError ?
+                        <div className={errorHandleCSS.empty_doc}>
 
-                    {data?.data.data.map( book => <BookCard key={book._id} book={book} refetch={refetch} />)}
+                        <BiErrorAlt />
+                        <h3>Error on fetch books</h3>
 
-                </div>
+                    </div>: ( data.data.data.length === 0 ?
+                        <div className={errorHandleCSS.empty_doc}>
+
+                            <BiErrorAlt />
+                            <h3>No books yet</h3>
+
+                        </div> : <div className={booksCSS.container}>
+
+                            {data?.data.data.map( book => <BookCard key={book._id} book={book} refetch={refetch} />)}
+
+                        </div>
+                    )
+                )
             }
 
         </div>

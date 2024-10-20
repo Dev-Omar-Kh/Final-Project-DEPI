@@ -4,8 +4,10 @@ import newsCSS from './news.module.css';
 import { motion } from 'framer-motion';
 import { FaListUl } from 'react-icons/fa6';
 import { useOutletContext, useParams } from 'react-router-dom';
-import FakeNews from './News';
 import { BsDatabaseExclamation } from 'react-icons/bs';
+import { Axios, GetNewsSingle } from '../../../API/Api';
+import { useQuery } from 'react-query';
+import { ThreeCircles } from 'react-loader-spinner';
 
 export default function NewsMessages({noData}) {
 
@@ -17,17 +19,24 @@ export default function NewsMessages({noData}) {
 
     // ====== news-data ====== //
 
-    const news = FakeNews.find(news => news._id === id);
+    const singleNews = async() => {
+
+        return await Axios.get(`${GetNewsSingle}/${id}` , {withCredentials: true});
+
+    }
+
+    const {data, isLoading, isError} = useQuery(['getSingleNews', id], singleNews);
+    const news = data?.data.data;
 
     // ====== check-for-links ====== //
 
-    const [formattedDescription, setFormattedDescription] = useState(null)
+    const [formattedDescription, setFormattedDescription] = useState(null);
 
     useEffect(() => {
 
         if(id && news){
             
-            const regex = /\{([^,]+),\s*(https?:\/\/[^\s]+)\}/ || /\{([^,]+) ,\s*(https?:\/\/[^\s]+)\}/;
+            const regex = /\{([^,]+),\s*(https?:\/\/[^\s]+)\}/g;
 
             setFormattedDescription(news.description.replace(regex, (match, text, url) => {
                 return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text.trim()}</a>`;
@@ -57,7 +66,7 @@ export default function NewsMessages({noData}) {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '10px',
-        fontSize: '30px',
+        fontSize: '20px',
         fontWeight: '600',
         color: 'var(--first-text-color)'
 
@@ -65,7 +74,7 @@ export default function NewsMessages({noData}) {
 
     const dataLessIcon = {
 
-        fontSize: '120px',
+        fontSize: '100px',
         color: 'var(--active-color)'
 
     }
@@ -83,7 +92,23 @@ export default function NewsMessages({noData}) {
                     <BsDatabaseExclamation style={dataLessIcon} />
                     <p>No News Yet</p>
 
-                </div> :<>
+                </div> :(isLoading ? <div style={{
+                        width: '100%' , height: '100%', display: 'flex', alignItems: 'center' , justifyContent: 'center'
+                    }}>
+                        <ThreeCircles
+                            visible={true} height="50" width="50" color="var(--active-color)"
+                            ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                        />
+                    </div> : (isError ? <div style={noDataCont}>
+
+                        <motion.div whileTap={{scale: 0.8}} onClick={() => setDisplayBook(true)} className={newsCSS.no_data_burger}>
+                            <FaListUl />
+                        </motion.div>
+
+                        <BsDatabaseExclamation style={dataLessIcon} />
+                        <p>Error on fetching news</p>
+
+                    </div> : <>
                     <div className={newsCSS.news_det_title}>
 
                         <div className={newsCSS.news_title_det}>
@@ -102,7 +127,7 @@ export default function NewsMessages({noData}) {
                         <div dangerouslySetInnerHTML={{ __html: formattedDescription }} className={newsCSS.news_det_message_cont}></div>
 
                     </div>
-                </>}
+                </>))}
 
             </motion.div>
 

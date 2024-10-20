@@ -59,16 +59,19 @@ export default function AllUsers() {
                     const {data} = await Axios.delete(`${DeleteUsers}/${deleteUser}` , {withCredentials: true});
                     if(data.success){
 
-                        setDeleteUser(null);
                         setDisplayWarn(false);
                         setUserData(null);
                         setSuccessMsg(data.message);
-                        refetch();
+                        setTimeout(() => {
+                            refetch();
+                        }, 3600);
 
                     }
 
                 } catch (error) {
                     setErrMsg(error);
+                }finally{
+                    setDeleteUser(null);
                 }
             }
         }

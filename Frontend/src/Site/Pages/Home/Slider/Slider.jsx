@@ -1,49 +1,66 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { IoArrowBackSharp, IoArrowForwardSharp } from 'react-icons/io5';
 
 import sliderCSS from './slider.module.css';
+import errorHandleCSS from '../../../../Styles/db_tables.module.css';
 import { AnimatePresence, motion } from 'framer-motion';
-import FakeDataBooks from '../../../../FakeDataBooks';
+// import FakeDataBooks from '../../../../FakeDataBooks';
 import { Link } from 'react-router-dom';
 import { IoIosArrowForward } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllBooks } from '../../../../Store/BookSlice';
+import { ThreeCircles } from 'react-loader-spinner';
+import { BiErrorAlt } from 'react-icons/bi';
 
 export default function Slider({height}) {
 
     // ====== fake-data-books ====== //
 
-    const books = useMemo(() => FakeDataBooks.slice(0, 6), []);
+    const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
 
-    const [currentBook, setCurrentBook] = useState(books[0]);
-
-    const handleNextBook = useCallback(() => {
-
-        const nextId = (books.indexOf(currentBook) + 1) % books.length;
-        setCurrentBook(books[nextId]);
-
-    } , [books, currentBook]);
-
-    const handlePrevBook = useCallback(() => {
-
-        const prevId = (books.indexOf(currentBook) - 1 + books.length) % books.length;
-        setCurrentBook(books[prevId]);
-
-    } , [books, currentBook]);
+    const disPatch = useDispatch()
 
     useEffect(() => {
 
-        books.forEach(book => {
+        disPatch(getAllBooks());
 
-            const img = new Image();
-            img.src = book.imageURL;
+    } , [disPatch]);
 
-        });
+    const [currentBook, setCurrentBook] = useState(null);
+
+    useEffect(() => {
+        if (bookData?.data) {
+            setCurrentBook(bookData.data[0]);
+        }
+    }, [bookData]);
+
+
+    const handleNextBook = useCallback(() => {
+
+        if (Array.isArray(bookData?.data) && bookData.data.length > 0 && currentBook) {
+            const nextId = (bookData.data.indexOf(currentBook) + 1) % bookData.data.length;
+            setCurrentBook(bookData.data[nextId]);
+        }
+
+    } , [bookData, currentBook]);
+
+    const handlePrevBook = useCallback(() => {
+
+        if (Array.isArray(bookData?.data) && bookData.data.length > 0 && currentBook) {
+            const prevId = (bookData.data.indexOf(currentBook) - 1 + bookData.data.length) % bookData.data.length;
+            setCurrentBook(bookData.data[prevId]);
+        }
+
+    } , [bookData, currentBook]);
+
+    useEffect(() => {
 
         const interval = setInterval(handleNextBook, 8000);
 
         return () => clearInterval(interval);
 
-    }, [books , handleNextBook]);
+    }, [bookData , handleNextBook]);
 
     // ====== container-height ====== //
 
@@ -83,9 +100,38 @@ export default function Slider({height}) {
 
     }
 
+    if(!currentBook){
+
+        return <React.Fragment>
+
+            <div style={{
+                width: '100%', height : `calc(100svh - ${contHeight}px)`, 
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+            }}>
+                <ThreeCircles
+                    visible={true} height="50" width="50" color="var(--active-color)"
+                    ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                />
+            </div>
+
+        </React.Fragment>
+
+    }
+
     return <React.Fragment>
 
-        <div style={{height : `calc(100svh - ${contHeight}px)`}} className={sliderCSS.container}>
+        {bookLoading ? <div style={{
+                width: '100%', height : `calc(100svh - ${contHeight}px)`, 
+                display: 'flex', alignItems: 'center', justifyContent: 'center'
+            }}>
+            <ThreeCircles
+                visible={true} height="50" width="50" color="var(--active-color)"
+                ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+            />
+        </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
+            <BiErrorAlt />
+            <h3>Error on fetch books</h3>
+        </div> : <div style={{height : `calc(100svh - ${contHeight}px)`}} className={sliderCSS.container}>
 
             <motion.div onClick={handlePrevBook} whileTap={{scale : 0.90}} className={sliderCSS.arrow}>
                 <IoArrowBackSharp />
@@ -103,9 +149,9 @@ export default function Slider({height}) {
 
                         <motion.div variants={toBottomVariants} className={sliderCSS.box_content}>
 
-                            <h3>{currentBook.bookTitle}</h3>
+                            <h3>{currentBook.title}</h3>
 
-                            <p>{currentBook.bookDescription}</p>
+                            <p>{currentBook.description}</p>
 
                             <Link to={'/books'}>
                                 Show more
@@ -116,7 +162,7 @@ export default function Slider({height}) {
 
                         <motion.div variants={toTopVariants} className={sliderCSS.box_img}>
 
-                            <img src={currentBook.imageURL} alt={currentBook.bookTitle} />
+                            <img src={currentBook.image} alt={currentBook.title} />
 
                         </motion.div>
 
@@ -130,7 +176,7 @@ export default function Slider({height}) {
                 <IoArrowForwardSharp />
             </motion.div>
 
-        </div>
+        </div>)}
 
     </React.Fragment>
 

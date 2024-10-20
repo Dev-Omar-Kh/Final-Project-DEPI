@@ -58,9 +58,7 @@ export const postUser = async (req, res, next) => {
 		);
 	}
 	if (password != confirmPassword) {
-		return next(
-			errorHandler(400, "something went wrong")
-		);
+		return next(errorHandler(400, "something went wrong"));
 	}
 	//encrypt the user password
 	const hashedPassword = bcrypt.hashSync(password, 10);
@@ -85,11 +83,7 @@ export const postUser = async (req, res, next) => {
 };
 export const updateUser = async (req, res, next) => {
 	const { id } = req.params;
-	const { username, email, phone, password, role } = req.body;
-	let hashedPassword = null;
-	if (password) {
-		hashedPassword = bcrypt.hashSync(password, 10);
-	}
+	const { username, email, phone, role } = req.body;
 	try {
 		const user = await User.findByIdAndUpdate(
 			{ _id: id },
@@ -98,8 +92,7 @@ export const updateUser = async (req, res, next) => {
 					username,
 					email,
 					phone,
-					password: hashedPassword,
-					role
+					role,
 				},
 			},
 			{ new: true }
@@ -110,6 +103,28 @@ export const updateUser = async (req, res, next) => {
 		return res
 			.status(200)
 			.json({ success: true, data: rest, message: "user updated" });
+	} catch (error) {
+		return next(errorHandler(400, error.message));
+	}
+};
+export const changePassword = async (req, res, next) => {
+	const { id } = req.params;
+	const { password } = req.body;
+	const hashedPassword = bcrypt.hashSync(password, 10);
+	try {
+		const user = await User.findByIdAndUpdate(
+			{ _id: id },
+			{
+				$set: {
+					password: hashedPassword,
+				},
+			},
+			{ new: true }
+		);
+		//server respond after creating the user successfully
+		return res
+			.status(200)
+			.json({ success: true, message: "password changed" });
 	} catch (error) {
 		return next(errorHandler(400, error.message));
 	}

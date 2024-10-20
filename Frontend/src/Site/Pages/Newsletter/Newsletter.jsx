@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import FakeNews from './News';
 
 import { GrArticle } from 'react-icons/gr';
 import { IoHome } from 'react-icons/io5';
 
 import newsCSS from './news.module.css';
+import errorHandleCSS from '../../../Styles/db_tables.module.css';
+import './active.css';
+import { Axios, GetNews } from '../../../API/Api';
+import { useQuery } from 'react-query';
+import { ThreeCircles } from 'react-loader-spinner';
+import { BiErrorAlt } from 'react-icons/bi';
 
 export default function Newsletter() {
+
+    // ====== get-all-books ====== //
+
+    const getAllNewsSite = async() => {
+
+        return await Axios.get(`${GetNews}` , {withCredentials: true});
+
+    }
+
+    const {data , isLoading , isError} = useQuery('getAllNewsSite' , getAllNewsSite);
+
+    const news = data?.data.data;
 
     // ====== display-news-box-for-phone ====== //
 
@@ -30,8 +47,6 @@ export default function Newsletter() {
 
     }
 
-    // console.log(FakeNews[0].description.split(' '));
-
     return <React.Fragment>
 
         <motion.div variants={ParentVariants} initial='hidden' animate='visible' className={newsCSS.container}>
@@ -50,9 +65,24 @@ export default function Newsletter() {
 
                 </div>
 
-                <div className={newsCSS.news_cards_cont}>
+                {isLoading ? <div style={{
+                    width: '100%', height: '100%' , display: 'flex', alignItems: 'center' , justifyContent: 'center'
+                }}>
+                    <ThreeCircles
+                        visible={true} height="50" width="50" color="var(--active-color)"
+                        ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                    />
+                </div> : (isError ? <div className={errorHandleCSS.empty_doc}>
 
-                    {FakeNews.map(news => <NavLink to={news._id} key={news._id} onClick={() => setDisplayBook(false)} className={newsCSS.news_card}>
+                    <BiErrorAlt />
+                    <h3>Can't get news</h3>
+
+                </div> : <div className={newsCSS.news_cards_cont}>
+
+                    {news.map(news => <NavLink to={news._id} key={news._id} 
+                        onClick={() => setDisplayBook(false)} 
+                        id='news' className={newsCSS.news_card}
+                    >
                         <div className={newsCSS.card_head}>
                             <p className={newsCSS.card_title}>
                                 {news.title.split(' ').slice(0, 5).join(' ') + (news.title.split(' ').length > 4 ? '...' :'')}
@@ -64,7 +94,7 @@ export default function Newsletter() {
                         </p>
                     </NavLink>)}
 
-                </div>
+                </div>)}
 
                 <motion.div whileTap={{scale: 0.95}} className={newsCSS.return_home}>
 
@@ -73,61 +103,6 @@ export default function Newsletter() {
                 </motion.div>
 
             </motion.div>
-
-            {/* <motion.div variants={rightVariants} className={newsCSS.news_det}>
-
-                <div className={newsCSS.news_det_title}>
-
-                    <div className={newsCSS.news_title_det}>
-                        <p className={newsCSS.title_det_name}>Omar Khaled Mohamed Said</p>
-                        <p className={newsCSS.title_det_date}>10-18-2024</p>
-                    </div>
-
-                    <motion.div whileTap={{scale: 0.8}} onClick={() => setDisplayBook(true)} className={newsCSS.burger_phone}>
-                        <FaListUl />
-                    </motion.div>
-
-                </div>
-
-                <div className={newsCSS.news_det_message}>
-
-                    <div className={newsCSS.news_det_message_cont}>
-
-                        <p>
-                            Hello Everyone
-                            <br />
-                            <br />
-                            A new book titled "House of Sky" 
-                            by renowned author Sarah J. Maas has just been released in the Fantasy category. 
-                            The story follows Bryce Quinlan and Hunt Athalar 
-                            as they try to return to normal life after saving Crescent City. 
-                            With the Asteri keeping their word to leave them alone, Bryce and Hunt are hoping for 
-                            a chance to relax and figure out their future. However, as rebels rise against the Asteri's power, 
-                            Bryce and Hunt are faced with a critical choice: stay silent or fight for justice. 
-                            Get your copy now with a 5% discount. Price: 642 EGP.
-                            <br />
-                            <br />
-                            With the Asteri keeping their word to leave them alone, Bryce and Hunt are hoping for 
-                            a chance to relax and figure out their future. However, as rebels rise against the Asteri's power, 
-                            Bryce and Hunt are faced with a critical choice: stay silent or fight for justice. 
-                            Get your copy now with a 5% discount. Price: 642 EGP.
-                            <br />
-                            <br />
-                            The story follows Bryce Quinlan and Hunt Athalar 
-                            as they try to return to normal life after saving Crescent City. 
-                            With the Asteri keeping their word to leave them alone.
-                            <br />
-                            <br />
-                            <a href="http://localhost:3000/single_book/651a50f946a92da7981902f9" target='_blank' rel="noreferrer">
-                                Gos to Shop
-                            </a>
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </motion.div> */}
 
             <Outlet context={setDisplayBook} />
 

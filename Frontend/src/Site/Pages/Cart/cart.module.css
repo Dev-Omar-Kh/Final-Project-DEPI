@@ -1,0 +1,244 @@
+.container{
+
+    width: 100%;
+    padding-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+}
+
+.card{
+
+    position: relative;
+    width: calc(50% - 10px);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--active-color);
+    overflow: hidden;
+
+}
+
+.loading{
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-opacity);
+    z-index: 11;
+
+}
+
+.action{
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+
+}
+
+.action button{
+
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--active-color);
+    border-radius: 50%;
+    border: 1px solid var(--active-color);
+    background-color: var(--first-color);
+    cursor: pointer;
+
+}
+
+.card_img{
+
+    height: 200px;
+
+}
+
+.card_img img{
+
+    max-width: 200px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+
+}
+
+.card_det{
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.card_det h3{
+
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--first-text-color);
+
+}
+
+.book_price{
+
+    font-style: 16px;
+    font-weight: 500;
+    color: var(--first-text-color);
+
+}
+
+.book_price span{
+
+    margin-left: 5px;
+    color: var(--active-color);
+
+}
+
+.counter{
+
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: var(--first-text-color);
+    border-radius: 5px;
+    border: 1px solid var(--active-color);
+    overflow: hidden;
+
+}
+
+.counter button{
+
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--first-text-color);
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+}
+
+.counter button:first-child{
+
+    border-right: 1px solid var(--active-color);
+
+}
+
+.counter button:last-child{
+
+    border-left: 1px solid var(--active-color);
+
+}
+
+.counter p{
+
+    padding: 0px 10px;
+
+}
+
+.main_det{
+
+    width: 100%;
+    padding-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+}
+
+.main_det p{
+
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--first-text-color);
+
+}
+
+.main_det p span{
+
+    color: var(--active-color);
+
+}
+
+.main_det a{
+
+    padding: 15px 30px;
+    border-radius: 5px;
+    background-color: var(--active-color);
+    color: var(--first-color);
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 950px){
+
+    .card{
+
+        width: 100%;
+
+    }
+
+}
+
+@media(max-width: 510px){
+
+    .card{
+
+        flex-direction: column;
+
+    }
+
+    .card_img , .card_det{
+
+        width: 100%;
+
+    }
+
+    .card_img{
+
+        height: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .card_img img{
+
+        max-width: 100%;
+        height: 100%;
+        object-fit: cover;
+
+    }
+
+    .main_det a{
+
+        text-align: center;
+        width: 100%;
+
+    }
+
+}

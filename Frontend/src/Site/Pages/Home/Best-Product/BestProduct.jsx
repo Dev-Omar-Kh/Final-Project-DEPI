@@ -1,18 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import FakeDataBooks from './../../../../FakeDataBooks';
 
 import { IoMdArrowRoundForward } from 'react-icons/io';
 
 import bestProCSS from './best_pro.module.css';
+import errorHandleCSS from '../../../../Styles/db_tables.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllBooks } from '../../../../Store/BookSlice';
+import { ThreeCircles } from 'react-loader-spinner';
+import { BiErrorAlt } from 'react-icons/bi';
 
 export default function BestProduct() {
 
     // ====== best-book-data ====== //
 
-    const bestBook = FakeDataBooks.slice(2 , 3);
-    const data = bestBook[0];
+    // ====== books-data ====== //
+
+    const [filteredData, setFilteredData] = useState(null);
+
+    const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
+
+    const disPatch = useDispatch()
+
+    useEffect(() => {
+
+        disPatch(getAllBooks());
+
+    } , [disPatch]);
+
+    useEffect(() => {
+
+        if(bookData?.data){
+            setFilteredData(bookData.data.slice(bookData.data.length - 2 , bookData.data.length - 1));
+        }
+
+    }, [bookData]);
 
     // ====== framer-motion ====== //
 
@@ -37,9 +60,32 @@ export default function BestProduct() {
 
     }
 
+    if(!filteredData){
+
+        return <React.Fragment>
+
+            <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                <ThreeCircles
+                    visible={true} height="50" width="50" color="var(--active-color)"
+                    ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                />
+            </div>
+
+        </React.Fragment>
+
+    }
+
     return <React.Fragment>
 
-        <motion.div 
+        {bookLoading ? <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+            <ThreeCircles
+                visible={true} height="50" width="50" color="var(--active-color)"
+                ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+            />
+        </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
+            <BiErrorAlt />
+            <h3>Error on fetch books</h3>
+        </div> : <motion.div 
             variants={parentVariants} 
             initial='hidden' whileInView='visible' viewport={{once: true , amount: 0.3}}
             className={bestProCSS.container}
@@ -47,7 +93,7 @@ export default function BestProduct() {
 
             <motion.div variants={toTopVariants} className={bestProCSS.img_cont}>
 
-                <img src={data.imageURL} alt="" />
+                <img src={filteredData[0].image} alt="" />
 
             </motion.div>
 
@@ -55,22 +101,26 @@ export default function BestProduct() {
 
                 <h3>Best Selling Book</h3>
 
-                <p className={bestProCSS.book_author}>{data.authorName}</p>
+                <p className={bestProCSS.book_author}>{filteredData[0].author}</p>
 
-                <p className={bestProCSS.book_name}>{data.bookTitle}</p>
+                <p className={bestProCSS.book_name}>{filteredData[0].title}</p>
 
-                <p className={bestProCSS.book_des}>{data.bookDescription.split(' ').slice(0 , 20).join(' ') + '...'}</p>
+                {filteredData[0].description &&
+                    <p className={bestProCSS.book_des}>
+                        {filteredData[0].description.split(' ').slice(0 , 20).join(' ') + '...'}
+                    </p>
+                }
 
-                <p className={bestProCSS.book_price}>{10000} <span>EGP</span></p>
+                <p className={bestProCSS.book_price}>{filteredData[0].price} <span>EGP</span></p>
 
-                <Link to={`/single_book/${data._id}`} className={bestProCSS.action}>
+                <Link to={`/single_book/${filteredData[0]._id}`} className={bestProCSS.action}>
                     <p>View book details</p>
                     <IoMdArrowRoundForward />
                 </Link>
 
             </motion.div>
 
-        </motion.div>
+        </motion.div>)}
 
     </React.Fragment>
 

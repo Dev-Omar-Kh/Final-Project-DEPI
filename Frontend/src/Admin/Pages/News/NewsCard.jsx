@@ -104,7 +104,7 @@ export default function NewsCard({news , refetch}) {
 
             <div className={newsCardCSS.actions}>
 
-                <Link><MdEdit /></Link>
+                <Link to={`update/${news._id}`}><MdEdit /></Link>
                 <button onClick={deleteNewsFS}><MdDeleteOutline /></button>
 
             </div>

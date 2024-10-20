@@ -21,6 +21,15 @@ import Suggestion from './Admin/Pages/Suggestion/Suggestion';
 import Orders from './Admin/Pages/Orders/Orders';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import UpdateBook from './Admin/Pages/Books/UpdateBook';
+import UpdateNews from './Admin/Pages/News/UpdateNews';
+import Profile from './Site/Pages/Profile/Profile';
+import AuthRoute from './Protected-Routes/AuthRoute';
+import BlockAuthRoute from './Protected-Routes/BlockAuthRoute';
+import AdminRoute from './Protected-Routes/AdminRoute';
+import { Provider } from 'react-redux';
+import { Store } from './Store/Store';
+import OffersPage from './Site/Pages/Offers/OffersPage';
+import Cart from './Site/Pages/Cart/Cart';
 
 const routes = createBrowserRouter([
 
@@ -29,7 +38,10 @@ const routes = createBrowserRouter([
     {path : '/' , element : <SiteLayout /> , children : [
 
         {path : '/' , element : <Home />},
+        {path : '/profile' , element : <AuthRoute><Profile /></AuthRoute>},
+        {path : '/cart' , element : <AuthRoute><Cart /></AuthRoute>},
         {path : '/books' , element : <Books />},
+        {path : '/offers' , element : <OffersPage />},
         {path : '/suggestBook' , element : <SuggestionPage />},
         {path : '/single_book/:id' , element : <SingleBook />},
 
@@ -37,7 +49,7 @@ const routes = createBrowserRouter([
 
     // ====== newsletter-routes ====== //
 
-    {path : '/newsletter' , element : <Newsletter /> , children: [
+    {path : '/newsletter' , element : <AuthRoute><Newsletter /></AuthRoute> , children: [
 
         {path : '/newsletter', element : <NewsMessages noData={true} />},
         {path : '/newsletter/:id', element : <NewsMessages />}
@@ -46,12 +58,12 @@ const routes = createBrowserRouter([
 
     // ====== authentication-routes ====== //
 
-    {path: '/register' , element : <Register />},
-    {path: '/login' , element : <Login />},
+    {path: '/register' , element : <BlockAuthRoute><Register /></BlockAuthRoute>},
+    {path: '/login' , element : <BlockAuthRoute><Login /></BlockAuthRoute>},
 
     // ====== admin-routes ====== //
 
-    {path: '/admin' , element : <AdminLayout /> , children: [
+    {path: '/admin' , element : <AdminRoute><AdminLayout /></AdminRoute> , children: [
 
         {path: '/admin' , element: <Empty />},
         
@@ -64,12 +76,13 @@ const routes = createBrowserRouter([
 
         {path: 'news' , element: <NewsList />},
         {path: 'news/add' , element: <AddNews />},
+        {path: 'news/update/:id' , element: <UpdateNews />},
 
         {path: 'orders' , element: <Orders />},
 
         {path: 'suggestion' , element: <Suggestion />},
 
-    ]}
+    ]},
 
 ]);
 
@@ -79,11 +92,15 @@ export default function App() {
 
     return <React.Fragment>
 
-        <QueryClientProvider client={clientQuery}>
+        <Provider store={Store}>
 
-            <RouterProvider router={routes} />
+            <QueryClientProvider client={clientQuery}>
 
-        </QueryClientProvider>
+                <RouterProvider router={routes} />
+
+            </QueryClientProvider>
+
+        </Provider>
 
     </React.Fragment>
 

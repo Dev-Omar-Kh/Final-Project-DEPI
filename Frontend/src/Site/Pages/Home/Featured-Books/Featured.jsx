@@ -1,15 +1,42 @@
-import React from 'react';
-import FakeDataBooks from './../../../../FakeDataBooks';
+import React, { useEffect, useState } from 'react';
+// import FakeDataBooks from './../../../../FakeDataBooks';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 import { IoMdArrowRoundForward } from 'react-icons/io';
 
 import commonCSS from '../../../../Styles/home_common.module.css';
+import errorHandleCSS from '../../../../Styles/db_tables.module.css';
 import Products from '../../../../Components/Site/Products/Products';
 import Titles from '../Titles-Home/Titles';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllBooks } from '../../../../Store/BookSlice';
+import { ThreeCircles } from 'react-loader-spinner';
+import { BiErrorAlt } from 'react-icons/bi';
 
 export default function Featured() {
+
+    // ====== books-data ====== //
+
+    const [filteredData, setFilteredData] = useState(null);
+
+    const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
+
+    const disPatch = useDispatch()
+
+    useEffect(() => {
+
+        disPatch(getAllBooks());
+
+    } , [disPatch]);
+
+    useEffect(() => {
+
+        if(bookData?.data){
+            setFilteredData(bookData.data.slice(0 , 4))
+        }
+
+    }, [bookData]);
 
     // ====== framer-motion ====== //
 
@@ -21,17 +48,36 @@ export default function Featured() {
 
     }
 
-    // ====== send-books-data ====== //
+    if(!filteredData){
 
-    const featuredBooks =  FakeDataBooks.slice(6 , 10);
+        return <React.Fragment>
+
+            <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                <ThreeCircles
+                    visible={true} height="50" width="50" color="var(--active-color)"
+                    ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                />
+            </div>
+
+        </React.Fragment>
+
+    }
 
     return <React.Fragment>
 
-        <div className={commonCSS.container}>
+        {bookLoading ? <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+            <ThreeCircles
+                visible={true} height="50" width="50" color="var(--active-color)"
+                ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+            />
+        </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
+            <BiErrorAlt />
+            <h3>Error on fetch books</h3>
+        </div> : <div className={commonCSS.container}>
 
             <Titles title={'Featured Books'} />
 
-            <Products data={featuredBooks} />
+            <Products data={filteredData} />
 
             <motion.div
                 variants={linkVariants}
@@ -46,7 +92,7 @@ export default function Featured() {
 
             </motion.div>
 
-        </div>
+        </div>)}
 
     </React.Fragment>
 

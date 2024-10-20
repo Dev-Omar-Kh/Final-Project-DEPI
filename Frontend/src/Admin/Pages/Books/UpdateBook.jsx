@@ -365,6 +365,10 @@ export default function UpdateBook() {
                         </label>
                         <textarea 
                             id="description" placeholder={isLoading ? 'Loading...' : "Enter the book's description"}
+                            onBlur={formikObj.handleBlur}
+                            style={formikObj.touched.description && formikObj.errors.description ?
+                                {borderColor : 'var(--error-color)'} : {}
+                            }
                             onChange={formikObj.handleChange}
                             value={formikObj.values.description}
                             disabled={loading}

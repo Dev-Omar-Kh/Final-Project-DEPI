@@ -55,3 +55,16 @@ export const emailSignIn = async (req, res, next) => {
 		return next(errorHandler(400, error.message));
 	}
 };
+
+export const logout = async (req, res) => {
+	try {
+		res.clearCookie("access_token");
+
+		return res.json({
+			success: true,
+			message: "Logged out successfully",
+		});
+	} catch (error) {
+		return next(errorHandler(400, error.message));
+	}
+};

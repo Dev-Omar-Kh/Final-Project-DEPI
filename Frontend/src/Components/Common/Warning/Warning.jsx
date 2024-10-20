@@ -6,7 +6,7 @@ import warnCSS from './warning.module.css';
 import { motion } from 'framer-motion';
 import { ThreeCircles } from 'react-loader-spinner';
 
-export default function Warning({cancel , data , setDeleteData , deleteData}) {
+export default function Warning({cancel , data , setDeleteData , deleteData , msg}) {
 
     // ====== framer-motion ====== //
 
@@ -39,7 +39,12 @@ export default function Warning({cancel , data , setDeleteData , deleteData}) {
 
                 <div className={warnCSS.msg_text}>
 
-                    <p>Are you sure you want to delete " <span>{data.username || data.title}</span> " ?</p>
+                    {msg === 'logout' ?
+                        <p>
+                            Are you sure you want to sign out of " <span style={{textTransform: 'none'}}>{data.email}</span> " ?
+                        </p> : 
+                        <p>Are you sure you want to delete " <span>{data.username || data.title}</span> " ?</p>
+                    }
 
                 </div>
 

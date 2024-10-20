@@ -70,10 +70,10 @@ export default function Login() {
             }
 
         } catch (error) {
-            setErrMsg(error.response.data.message);
+            setErrMsg(error.response.data.message || 'Something is error');
+        }finally{
+            setLoading(false);
         }
-
-        setLoading(false);
 
     }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import titleCSS from '../../../Styles/db_title.module.css';
 import formCSS from '../../../Styles/forms.module.css';
+import errorHandleCSS from '../../../Styles/db_tables.module.css'
 import { BsPatchPlusFill } from 'react-icons/bs';
 import { motion } from 'framer-motion';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,21 +11,21 @@ import { useQuery } from 'react-query';
 import { useFormik } from 'formik';
 import Status from '../../../Components/Common/Status/Status';
 import { ThreeCircles } from 'react-loader-spinner';
+import { BiErrorAlt } from 'react-icons/bi';
 
 export default function AddAdmin() {
 
     // ====== get-single-user ====== //
 
-    const token = localStorage.getItem('token');
     const {id} = useParams();
 
     const getSingleUser = async() => {
 
-        return await Axios.get(`${GetUserSingle}/${id}` , {headers: {token}});
+        return await Axios.get(`${GetUserSingle}/${id}` , {withCredentials: true});
 
     }
 
-    const {data , isLoading} = useQuery('getSingleUserById' , getSingleUser);
+    const {data , isLoading , isError} = useQuery('getSingleUserById' , getSingleUser);
 
     const userData = data?.data.data;
 
@@ -49,7 +50,7 @@ export default function AddAdmin() {
 
         try {
 
-            const {data} = await Axios.patch(`${UsersUpdateRole}/${id}`, values , {headers: {token}});
+            const {data} = await Axios.patch(`${UsersUpdateRole}/${id}`, values , {withCredentials: true});
 
             if(data.success){
 
@@ -97,7 +98,19 @@ export default function AddAdmin() {
 
             </div>
 
-            <div className={titleCSS.form_cont}>
+            {isLoading ? <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+
+                <ThreeCircles
+                    visible={true} height="50" width="50" color="var(--active-color)"
+                    ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                />
+
+            </div> : (isError ? <div className={errorHandleCSS.empty_doc}>
+
+                    <BiErrorAlt />
+                    <h3>Error on fetch user data</h3>
+
+                </div> : <div className={titleCSS.form_cont}>
 
                 <form onSubmit={formikObj.handleSubmit} className={formCSS.form} style={{opacity: loading ? 0.6 : 1}}>
 
@@ -192,7 +205,7 @@ export default function AddAdmin() {
 
                 </form>
 
-            </div>
+            </div>)}
 
         </div>
 
