@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import singleBookCSS from './s_book.module.css';
 import errorHandleCSS from '../../../Styles/db_tables.module.css'
 import { RiShoppingCartLine } from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { Axios, BookGetSingle, CartAdd } from '../../../API/Api';
 import { ThreeCircles } from 'react-loader-spinner';
@@ -24,9 +24,19 @@ export default function SingleBook() {
 
     }
 
-    const {data , isLoading , isError} = useQuery('getSingleBookById' , getSingleBook);
+    const {data , isLoading , isError , refetch} = useQuery('getSingleBookById' , getSingleBook);
 
     const book = data?.data.data;
+
+    // ====== refetch-on-url-changed ====== //
+
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+
+        refetch();
+
+    } , [pathname , refetch]);
 
     // ====== add-to-cart ====== //
 

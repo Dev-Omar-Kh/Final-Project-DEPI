@@ -15,7 +15,7 @@
     flex-direction: column;
     gap: 10px;
     border-radius: 5px;
-    border: 1px solid var(--active-color);
+    border: 2px solid var(--bg-opacity);
 
 }
 
@@ -26,58 +26,299 @@
     gap: 5px;
     font-size: 16px;
     font-weight: 500;
-    color: var(--active-color);
+    color: var(--first-text-color);
 
 }
 
 .order_info p span{
 
-    color: var(--first-text-color);
+    color: var(--active-color);
 
 }
 
 .order_det{
 
     padding: 10px 0px;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 500;
     color: var(--first-text-color);
-    border-block: 1px solid var(--bg-opacity);
+    border-block: 2px solid var(--bg-opacity);
+
+}
+
+.order_det span{
+
+    color: var(--active-color);
 
 }
 
 .action{
 
     width: 100%;
-    display: flex;
-    justify-content: flex-end;
 
 }
 
 .action button{
 
-    padding: 5px 10px;
+    width: 100%;
+    padding: 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
     font-size: 16px;
-    color: var(--error-color);
-    border-radius: 5px;
-    border: 1px solid var(--error-color);
     background-color: var(--first-color);
+    border: 1px solid;
+    border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
 
 }
 
-.action button:hover{
+.action .details{
 
+    color: var(--active-color);
+    border-color: var(--active-color);
+
+    &:hover{
+
+        background-color: var(--active-color);
+        color: var(--first-color);
+
+    }
+
+}
+
+.order_det_cont{
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100svh;
+    padding: 50px 4.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-opacity);
+
+}
+
+.close_det_admin{
+
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--first-text-color);
+    border: none;
+    border-radius: 50%;
+    background-color: var(--first-color);
+    cursor: pointer;
+    z-index: 150;
+
+}
+
+.order_det_box{
+
+    width: 600px;
+    max-height: 100%;
+    padding: 0px 20px;
+    border-radius: 5px;
+    background-color: var(--first-color);
+
+}
+
+.order_title{
+
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--first-text-color);
+
+}
+
+.order_title svg{
+
+    font-size: 24px;
+    color: var(--active-color);
+
+}
+
+.order_box_det_scroll{
+
+    width: 100%;
+    max-height: 450px !important;
+    overflow: auto;
+    border-block: 2px solid var(--bg-opacity);
+
+}
+
+.order_box_det{
+
+    width: 100%;
+    max-height: 100%;
+    padding: 10px 0px;
+
+}
+
+.order_box_det_scroll::-webkit-scrollbar{
+
+    width: 5px;
+
+}
+
+.order_box_det_scroll::-webkit-scrollbar-thumb{
+
+    background-color: var(--bg-opacity);
+
+}
+
+.order_box_det_row{
+
+    padding: 10px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    border-top: 1px solid var(--bg-opacity);
+
+}
+
+.order_box_det_row:first-child{
+
+    border: none;
+
+}
+
+.order_box_det_row p{
+
+    color: var(--active-color);
+    font-weight: 500;
+
+}
+
+.order_box_det_row span{
+
+    color: var(--first-text-color);
+
+}
+
+.order_box_det_the_order{
+
+    padding: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-top: 1px solid var(--bg-opacity);
+
+}
+
+.books_ordered_title{
+
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--active-color);
+
+}
+
+.books_ordered{
+
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+}
+
+.books_ordered p , .order_message{
+
+    font-size: 16px;
+    color: var(--first-text-color);
+
+}
+
+.order_message{
+
+    font-size: 14px !important;
+
+}
+
+.books_ordered p span{
+
+    color: var(--active-color);
+
+}
+
+.order_det_actions{
+
+    width: 100%;
+    height: 70px;
+    /* padding: 20px 0px; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+
+}
+
+.order_det_actions button{
+
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 16px;
     color: var(--first-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.confirm{
+
+    background-color: var(--active-color);
+
+}
+
+.reject{
+
+    background-color: var(--seconde-text-color);
+
+}
+
+.delete_order{
+
     background-color: var(--error-color);
 
 }
 
 /* ====== responsive-style ====== */
 
+@media(max-width: 980px){
+
+    .order_box_det_scroll{
+
+        max-height: 350px !important;
+
+    }
+
+}
 @media(max-width: 980px){
 
     .card{
@@ -93,6 +334,38 @@
     .card{
 
         width: 100%;
+
+    }
+
+    .order_box_det_scroll{
+
+        max-height: 300px !important;
+
+    }
+
+    .order_det_box{
+
+        width: 100%;
+        max-height: 80%;
+        padding: 0px 10px !important;
+
+    }
+
+    .order_box_det_row span{
+
+        font-size: 14px;
+
+    }
+
+    .books_ordered p{
+
+        font-size: 14px;
+
+    }
+
+    .order_det_actions button{
+
+        width: calc((100% / 3) - (10px - (10px / 3)));
 
     }
 

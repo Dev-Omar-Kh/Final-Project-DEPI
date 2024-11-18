@@ -8,7 +8,7 @@ import './active.css'
 import { PiBooksFill } from 'react-icons/pi';
 import { GrArticle } from 'react-icons/gr';
 import { IoHome } from 'react-icons/io5';
-// import { MdOutlineMessage, MdOutlineShoppingBag } from 'react-icons/md';
+import { MdOutlineMessage, MdOutlineShoppingBag } from 'react-icons/md';
 
 export default function SideBar({display}) {
 
@@ -39,7 +39,7 @@ export default function SideBar({display}) {
                         <li>News</li>
                     </NavLink>
 
-                    {/* <NavLink to={'orders'} onClick={() => display(false)} className='side_bar_links'>
+                    <NavLink to={'orders'} onClick={() => display(false)} className='side_bar_links'>
                         <MdOutlineShoppingBag className={sideCSS.side_bar_icon} />
                         <li>Orders</li>
                     </NavLink>
@@ -47,7 +47,7 @@ export default function SideBar({display}) {
                     <NavLink to={'suggestion'} onClick={() => display(false)} className='side_bar_links'>
                         <MdOutlineMessage className={sideCSS.side_bar_icon} />
                         <li>Suggestions</li>
-                    </NavLink> */}
+                    </NavLink>
 
                 </ul>
 

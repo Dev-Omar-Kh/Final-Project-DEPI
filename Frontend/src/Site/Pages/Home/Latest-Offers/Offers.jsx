@@ -84,7 +84,7 @@ export default function Offers() {
                 className={commonCSS.link}
             >
 
-                <Link>
+                <Link to={'/offers'}>
                     <p>View more offers</p>
                     <IoMdArrowRoundForward />
                 </Link>

@@ -8,8 +8,7 @@ import { IoMdArrowRoundForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Titles from '../Titles-Home/Titles';
 import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllBooks } from '../../../../Store/BookSlice';
+import { useSelector } from 'react-redux';
 import { ThreeCircles } from 'react-loader-spinner';
 import { BiErrorAlt } from 'react-icons/bi';
 
@@ -22,14 +21,6 @@ export default function Popular() {
     const [uniqueCategories, setUniqueCategories] = useState(null);
 
     const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
-
-    const disPatch = useDispatch()
-
-    useEffect(() => {
-
-        disPatch(getAllBooks());
-
-    } , [disPatch]);
 
     useEffect(() => {
 

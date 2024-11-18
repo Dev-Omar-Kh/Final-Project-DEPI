@@ -8,6 +8,7 @@ import { BsDatabaseExclamation } from 'react-icons/bs';
 import { Axios, GetNewsSingle } from '../../../API/Api';
 import { useQuery } from 'react-query';
 import { ThreeCircles } from 'react-loader-spinner';
+import { IoNewspaperOutline } from 'react-icons/io5';
 
 export default function NewsMessages({noData}) {
 
@@ -89,8 +90,8 @@ export default function NewsMessages({noData}) {
                         <FaListUl />
                     </motion.div>
 
-                    <BsDatabaseExclamation style={dataLessIcon} />
-                    <p>No News Yet</p>
+                    <IoNewspaperOutline style={dataLessIcon} />
+                    <p>Select News</p>
 
                 </div> :(isLoading ? <div style={{
                         width: '100%' , height: '100%', display: 'flex', alignItems: 'center' , justifyContent: 'center'

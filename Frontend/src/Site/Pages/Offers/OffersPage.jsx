@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { BiErrorAlt } from 'react-icons/bi';
 import Products from '../../../Components/Site/Products/Products';
 import { ThreeCircles } from 'react-loader-spinner';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllBooks } from '../../../Store/BookSlice';
+import { useSelector } from 'react-redux'; 
 
 import errorHandleCSS from '../../../Styles/db_tables.module.css';
 import commonCSS from '../../../Styles/home_common.module.css';
+import Titles from '../Home/Titles-Home/Titles';
 
 export default function OffersPage() {
 
@@ -16,15 +16,7 @@ export default function OffersPage() {
 
     const [filteredData, setFilteredData] = useState(null);
 
-    const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
-
-    const disPatch = useDispatch()
-
-    useEffect(() => {
-
-        disPatch(getAllBooks());
-
-    } , [disPatch]);
+    const {bookLoading , bookError , bookData} = useSelector((store) => store.api); 
 
     useEffect(() => {
 
@@ -38,7 +30,10 @@ export default function OffersPage() {
 
         return <React.Fragment>
 
-            <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+            <div style={{
+                width: '100%',  height: '500px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
                 <ThreeCircles
                     visible={true} height="50" width="50" color="var(--active-color)"
                     ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
@@ -51,19 +46,28 @@ export default function OffersPage() {
 
     return <React.Fragment>
 
-        {bookLoading ? <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-            <ThreeCircles
-                visible={true} height="50" width="50" color="var(--active-color)"
-                ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
-            />
-        </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
-            <BiErrorAlt />
-            <h3>Error on fetch books</h3>
-        </div> : <div className={commonCSS.container}>
+        <div className={commonCSS.container}>
 
-            <Products data={filteredData} />
+            <Titles title={' Offers'} />
 
-        </div>)}
+            {bookLoading ? <div style={{
+                width: '100%',  height: '500px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+                <ThreeCircles
+                    visible={true} height="50" width="50" color="var(--active-color)"
+                    ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                />
+            </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
+                <BiErrorAlt />
+                <h3>Error on fetch books</h3>
+            </div> : <>
+
+                <Products data={filteredData} />
+
+            </>)}
+
+        </div>
 
     </React.Fragment>
 

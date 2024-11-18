@@ -14,8 +14,20 @@ import { GrArticle } from "react-icons/gr";
 import headerCSS from './header.module.css';
 import './active.css';
 import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { getAllBooks } from './../../../Store/BookSlice';
 
 export default function Header({height}) {
+
+    // ====== call-book-api ====== //
+
+    const disPatch = useDispatch()
+
+    useEffect(() => {
+
+        disPatch(getAllBooks());
+
+    } , [disPatch]);
 
     // ====== get-token-from-cookies ====== //
 

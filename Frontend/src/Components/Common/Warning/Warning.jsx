@@ -39,19 +39,19 @@ export default function Warning({cancel , data , setDeleteData , deleteData , ms
 
                 <div className={warnCSS.msg_text}>
 
-                    {msg === 'logout' ?
+                    {data !== 'cartWarn' ? (msg === 'logout' ?
                         <p>
                             Are you sure you want to sign out of " <span style={{textTransform: 'none'}}>{data.email}</span> " ?
                         </p> : 
                         <p>Are you sure you want to delete " <span>{data.username || data.title}</span> " ?</p>
-                    }
+                    ) : 'Are you sure you want to delete the cart'}
 
                 </div>
 
                 <div className={warnCSS.actions}>
 
                     <motion.button 
-                        onClick={() => setDeleteData(data._id)}
+                        onClick={() => setDeleteData(data === 'cartWarn' ? 'startDelete' : data._id)}
                         whileTap={{scale : 0.90}} className={warnCSS.delete}
                         style={{cursor: deleteData ? 'not-allowed' : 'pointer'}}
                     >

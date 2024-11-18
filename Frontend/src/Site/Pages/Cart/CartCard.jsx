@@ -8,7 +8,7 @@ import { Axios, CartDelete, CartUpdate } from '../../../API/Api';
 import Status from '../../../Components/Common/Status/Status';
 import { ThreeCircles } from 'react-loader-spinner';
 
-export default function CartCard({data , refetch}) {
+export default function CartCard({data , refetch , reRefetch}) {
 
     // increment-decrement-count 
 
@@ -42,7 +42,7 @@ export default function CartCard({data , refetch}) {
     const [successMsg, setSuccessMsg] = useState(null);
 
     const values = {
-        cartProductId: data._id,
+        bookId: data.bookId._id,
         quantity: updateCount
     }
 
@@ -61,7 +61,7 @@ export default function CartCard({data , refetch}) {
                 setSuccessMsg(data.message);
 
                 setTimeout(() => {
-                    refetch()
+                    reRefetch(!refetch);
                 }, 3600);
 
             }
@@ -77,7 +77,7 @@ export default function CartCard({data , refetch}) {
     // ====== delete-book ====== //
 
     const deleteValue = {
-        cartProductId: data._id,
+        bookId: data.bookId._id,
     }
 
     const deleteBook = async() => {
@@ -98,7 +98,7 @@ export default function CartCard({data , refetch}) {
                 setSuccessMsg(data.message);
 
                 setTimeout(() => {
-                    refetch()
+                    reRefetch(!refetch);
                 }, 3600);
 
             }
@@ -129,9 +129,6 @@ export default function CartCard({data , refetch}) {
 
             <div className={cartCardCSS.action}>
 
-                {updateCount !== data.quantity && 
-                    <button onClick={updateCartElement}><IoSaveOutline /></button>
-                }
                 <button onClick={deleteBook}><MdOutlineDelete /></button>
 
             </div>
@@ -147,14 +144,20 @@ export default function CartCard({data , refetch}) {
                 <h3>{data?.bookId.title}</h3>
 
                 {data.bookId.offer ? 
-                    <p className={cartCardCSS.book_price}>
-                        {(data.bookId.price - (data.bookId.price * (data.bookId.offer / 100))).toFixed(2)} 
-                        <span>EGP</span>
-                    </p> : 
-                    <p className={cartCardCSS.book_price}>
-                        {data?.bookId.price.toFixed(2)} 
-                        <span>EGP</span>
-                    </p>
+                    <div className={cartCardCSS.price_cont}>
+                        <p className={cartCardCSS.book_price_title}>Price : </p>
+                        <span className={cartCardCSS.book_price}>
+                            {(data.bookId.price - (data.bookId.price * (data.bookId.offer / 100))).toFixed(2)} 
+                            <span>EGP</span>
+                        </span>
+                    </div> : 
+                    <div className={cartCardCSS.price_cont}>
+                        <p className={cartCardCSS.book_price_title}>Price : </p>
+                        <span className={cartCardCSS.book_price}>
+                            {data?.bookId.price.toFixed(2)} 
+                            <span>EGP</span>
+                        </span>
+                    </div> 
                 }
 
                 <div className={cartCardCSS.counter}>
@@ -168,15 +171,30 @@ export default function CartCard({data , refetch}) {
                 </div>
 
                 {data.bookId.offer ? 
-                    <p className={cartCardCSS.book_price}>
-                        {(data.quantity * (data.bookId.price - (data.bookId.price * (data.bookId.offer / 100)))).toFixed(2)} 
-                        <span>EGP</span>
-                    </p> :
-                    <p className={cartCardCSS.book_price}>
-                        {(data.quantity * data.bookId.price).toFixed(2)} 
-                        <span>EGP</span>
-                    </p>
+                    <div className={cartCardCSS.price_cont}>
+                        <p className={cartCardCSS.book_price_title}>Total Price : </p>
+                        <span className={cartCardCSS.book_price}>
+                            {(data.quantity * (data.bookId.price - (data.bookId.price * (data.bookId.offer / 100)))).toFixed(2)} 
+                            <span>EGP</span>
+                        </span>
+                    </div>  :
+                    <div className={cartCardCSS.price_cont}>
+                        <p className={cartCardCSS.book_price_title}>Total Price : </p>
+                        <span className={cartCardCSS.book_price}>
+                            {(data.quantity * data.bookId.price).toFixed(2)} 
+                            <span>EGP</span>
+                        </span>
+                    </div> 
                 }
+
+                <button 
+                    className={`${cartCardCSS.edit_action} ${updateCount !== data.quantity ? cartCardCSS.edit_active : ''}`}
+                    disabled={updateCount === data.quantity}
+                    onClick={updateCartElement}
+                >
+                    <IoSaveOutline />
+                    <span>Update</span>
+                </button>
 
             </div>
 

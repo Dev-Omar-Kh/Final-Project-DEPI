@@ -36,15 +36,14 @@ export const emailSignIn = async (req, res, next) => {
 			process.env.SECRET_KEY,
 			{ expiresIn: "90d" }
 		);
-		console.log(token);
 
 		// const { password, ...rest } = user._doc;
 
 		res.cookie("access_token", token, {
 			httpOnly: true,
 			maxAge: 90 * 24 * 60 * 60 * 1000,
-			secure: true,
-			sameSite: "none",
+			// secure: true,
+			// sameSite: "none",
 		});
 		return res.status(200).json({
 			success: true,

@@ -24,6 +24,7 @@
     /* ====== ====== */
 
     --bg-opacity: rgba(47, 47, 47, 0.05);
+    --shadow-opacity: rgba(47, 47, 47, 0.2);
     --hash-opacity: rgba(47, 47, 47, 0.5);
     --dark-opacity: rgba(47, 47, 47, 0.9);
 

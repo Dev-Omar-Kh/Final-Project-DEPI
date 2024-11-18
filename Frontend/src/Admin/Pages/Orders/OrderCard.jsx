@@ -1,18 +1,29 @@
-import React from 'react';
-
-import { IoBanSharp } from 'react-icons/io5';
+import React, { useState } from 'react';
 
 import orderCardCSS from './orders.module.css';
+import { BiDetail } from 'react-icons/bi';
+import { AnimatePresence } from 'framer-motion';
+import OrderDetAdmin from './OrderDetAdmin';
 
 export default function OrderCard({data}) {
 
+    // ====== display-order-details ====== //
+
+    const [displayDetails, setDisplayDetails] = useState(false);
+
     return <React.Fragment>
+
+        <AnimatePresence>
+
+            {displayDetails && <OrderDetAdmin details={data} display={setDisplayDetails} />}
+
+        </AnimatePresence>
 
         <div className={orderCardCSS.card}>
 
             <div className={orderCardCSS.order_info}>
 
-                <p>Name : <span>{data.name}</span></p>
+                <p>Name : <span>{data.fullName}</span></p>
 
                 <p>Email : <span>{data.email}</span></p>
 
@@ -22,18 +33,15 @@ export default function OrderCard({data}) {
 
             <div className={orderCardCSS.order_det}>
 
-                <p>{data.orders.map((order , idx) => <span key={order._id}>
-                    {order.book}
-                    {idx < data.orders.length - 1 && ' - '}
-                </span>)}</p>
+                <p>Order Price : <span>{data.totalAmount.toFixed(2)} EGP</span></p>
 
             </div>
 
             <div className={orderCardCSS.action}>
 
-                <button>
-                    <IoBanSharp />
-                    Delete
+                <button onClick={() => setDisplayDetails(true)} className={orderCardCSS.details}>
+                    <BiDetail />
+                    Details
                 </button>
 
             </div>

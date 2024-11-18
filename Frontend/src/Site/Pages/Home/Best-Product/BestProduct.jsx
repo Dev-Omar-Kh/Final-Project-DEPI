@@ -6,8 +6,7 @@ import { IoMdArrowRoundForward } from 'react-icons/io';
 
 import bestProCSS from './best_pro.module.css';
 import errorHandleCSS from '../../../../Styles/db_tables.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllBooks } from '../../../../Store/BookSlice';
+import { useSelector } from 'react-redux';
 import { ThreeCircles } from 'react-loader-spinner';
 import { BiErrorAlt } from 'react-icons/bi';
 
@@ -20,14 +19,6 @@ export default function BestProduct() {
     const [filteredData, setFilteredData] = useState(null);
 
     const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
-
-    const disPatch = useDispatch()
-
-    useEffect(() => {
-
-        disPatch(getAllBooks());
-
-    } , [disPatch]);
 
     useEffect(() => {
 

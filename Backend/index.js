@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.routes.js";
 import bookRoutes from "./routes/book.routes.js";
 import newsRoutes from "./routes/news.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
+import orderRoutes from "./routes/order.routes.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import isAuth from "./middleware/isAuth.js";
@@ -32,6 +33,7 @@ app.use("/book", bookRoutes);
 app.use("/authentication", authRoutes);
 app.use("/news", isAuth, newsRoutes);
 app.use("/cart", isAuth, cartRoutes);
+app.use("/order", isAuth, orderRoutes);
 //Error handler route
 app.use((err, req, res, next) => {
 	const statusCode = err.statusCode || 500;

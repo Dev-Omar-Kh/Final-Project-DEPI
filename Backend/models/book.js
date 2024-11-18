@@ -35,6 +35,10 @@ const bookSchema = new mongoose.Schema(
 			trim: true,
 			default: "./question-mark.png",
 		},
+		bookQuantity: {
+			type: String,
+			required: true,
+		}
 	},
 	{ timestamps: true }
 );

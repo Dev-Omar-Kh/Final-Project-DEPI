@@ -30,6 +30,8 @@ import { Provider } from 'react-redux';
 import { Store } from './Store/Store';
 import OffersPage from './Site/Pages/Offers/OffersPage';
 import Cart from './Site/Pages/Cart/Cart';
+import CheckOut from './Site/Pages/Check-Out/CheckOut';
+import Order from './Site/Pages/Orders/Order';
 
 const routes = createBrowserRouter([
 
@@ -40,6 +42,8 @@ const routes = createBrowserRouter([
         {path : '/' , element : <Home />},
         {path : '/profile' , element : <AuthRoute><Profile /></AuthRoute>},
         {path : '/cart' , element : <AuthRoute><Cart /></AuthRoute>},
+        {path : '/orders' , element : <AuthRoute><Order /></AuthRoute>},
+        {path : '/checkout' , element : <AuthRoute><CheckOut /></AuthRoute>},
         {path : '/books' , element : <Books />},
         {path : '/offers' , element : <OffersPage />},
         {path : '/suggestBook' , element : <SuggestionPage />},

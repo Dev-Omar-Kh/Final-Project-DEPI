@@ -4,10 +4,10 @@ import commonCSS from '../../../Styles/home_common.module.css';
 import errorHandleCSS from '../../../Styles/db_tables.module.css';
 import Products from '../../../Components/Site/Products/Products';
 import { motion } from 'framer-motion';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllBooks } from '../../../Store/BookSlice';
+import { useSelector } from 'react-redux';
 import { ThreeCircles } from 'react-loader-spinner';
 import { BiErrorAlt } from 'react-icons/bi';
+import Titles from '../Home/Titles-Home/Titles';
 
 export default function Books() {
 
@@ -17,14 +17,6 @@ export default function Books() {
     const [uniqueCategories, setUniqueCategories] = useState(null);
 
     const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
-
-    const disPatch = useDispatch()
-
-    useEffect(() => {
-
-        disPatch(getAllBooks());
-
-    } , [disPatch]);
 
     useEffect(() => {
 
@@ -69,7 +61,10 @@ export default function Books() {
 
         return <React.Fragment>
 
-            <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+            <div style={{
+                width: '100%',  height: '500px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
                 <ThreeCircles
                     visible={true} height="50" width="50" color="var(--active-color)"
                     ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
@@ -82,48 +77,57 @@ export default function Books() {
 
     return <React.Fragment>
 
-        {bookLoading ? <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-            <ThreeCircles
-                visible={true} height="50" width="50" color="var(--active-color)"
-                ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
-            />
-        </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
-            <BiErrorAlt />
-            <h3>Error on fetch books</h3>
-        </div> : <div className={commonCSS.container}>
+        <div className={commonCSS.container}>
 
-            <motion.div 
-                variants={cateVariants} 
-                initial='hidden' whileInView={'visible'} viewport={{once: true , amount: 0.5}}
-                className={commonCSS.categories_cont}
-            >
+            <Titles title={' All Books'} />
 
-                <div className={commonCSS.cate_box}>
+            {bookLoading ? <div style={{
+                width: '100%',  height: '500px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+                <ThreeCircles
+                    visible={true} height="50" width="50" color="var(--active-color)"
+                    ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
+                />
+            </div> : (bookError ? <div className={errorHandleCSS.empty_doc}>
+                <BiErrorAlt />
+                <h3>Error on fetch books</h3>
+            </div> : <>
 
-                    <button 
-                        onClick={() => setCategory(null)} 
-                        className={`${commonCSS.cate} ${category === null ? commonCSS.active : ''}`}
-                    >
-                        All Books
-                    </button>
+                <motion.div 
+                    variants={cateVariants} 
+                    initial='hidden' whileInView={'visible'} viewport={{once: true , amount: 0.5}}
+                    className={commonCSS.categories_cont}
+                >
 
-                    {uniqueCategories.map((cate , idx) => {
-                        return <button 
-                            key={idx}
-                            onClick={() => setCategory(cate)} 
-                            className={`${commonCSS.cate} ${cate === category ? commonCSS.active : ''}`}
+                    <div className={commonCSS.cate_box}>
+
+                        <button 
+                            onClick={() => setCategory(null)} 
+                            className={`${commonCSS.cate} ${category === null ? commonCSS.active : ''}`}
                         >
-                            {cate}
+                            All Books
                         </button>
-                    })}
 
-                </div>
+                        {uniqueCategories.map((cate , idx) => {
+                            return <button 
+                                key={idx}
+                                onClick={() => setCategory(cate)} 
+                                className={`${commonCSS.cate} ${cate === category ? commonCSS.active : ''}`}
+                            >
+                                {cate}
+                            </button>
+                        })}
 
-            </motion.div>
+                    </div>
 
-            <Products category={category} data={filteredData} />
+                </motion.div>
 
-        </div>)}
+                <Products category={category} data={filteredData} />
+
+            </>)}
+
+        </div>
 
     </React.Fragment>
 

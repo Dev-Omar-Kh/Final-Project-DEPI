@@ -170,9 +170,25 @@
 
     }
 
+    .pro_img{
+
+        height: 450px !important;
+
+    }
+
 }
 
-@media(max-width: 790px) {
+@media(max-width: 920px){
+
+    .pro_img{
+
+        height: 400px !important;
+
+    }
+
+}
+
+@media(max-width: 800px) {
 
     .pro_card {
 
@@ -180,13 +196,35 @@
 
     }
 
+    .pro_img{
+
+        height: 550px !important;
+
+    }
+
 }
 
-@media(max-width: 520px) {
+@media(max-width: 640px){
+
+    .pro_img{
+
+        height: 450px !important;
+
+    }
+
+}
+
+@media(max-width: 570px) {
 
     .pro_card {
 
         width: 100%;
+
+    }
+
+    .pro_img{
+
+        height: fit-content !important;
 
     }
 

@@ -1,63 +1,161 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import commonCSS from '../../../Styles/home_common.module.css';
 import cartCSS from './cart.module.css';
-import errorHandleCSS from '../../../Styles/db_tables.module.css'
 import Titles from '../Home/Titles-Home/Titles';
 import CartCard from './CartCard';
 import { Link } from 'react-router-dom';
-import { Axios, CartGetAll } from '../../../API/Api';
-import { useQuery } from 'react-query';
+import { AllCartDelete, Axios } from '../../../API/Api';
 import { ThreeCircles } from 'react-loader-spinner';
 import { BiErrorAlt } from 'react-icons/bi';
+import { TbShoppingCartX } from 'react-icons/tb';
+import { AnimatePresence } from 'framer-motion';
+import Status from '../../../Components/Common/Status/Status';
+import Warning from '../../../Components/Common/Warning/Warning';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCardElements } from './../../../Store/CartSlice';
 
 export default function Cart() {
 
     // ====== get-cart-data ====== //
 
-    const getCartData = async() => {
+    const [refetch, setRefetch] = useState(false);
+    const disPatch = useDispatch()
 
-        return await Axios.get(`${CartGetAll}` , {withCredentials: true});
+    useEffect(() => {
+
+        disPatch(getCardElements());
+
+    } , [disPatch , refetch]);
+
+    const {cartLoading , cartError , cartData} = useSelector((store) => store.cart); 
+
+    // ====== delete-user-cart ====== //
+
+    const [displayWarn, setDisplayWarn] = useState(false);
+    const [deleteCart, setDeleteCart] = useState(null);
+    const [cartDataDelete, setCartDataDelete] = useState(null);
+
+    const [errMsg, setErrMsg] = useState(null);
+    const [visible, setVisible] = useState(true);
+    const [successMsg, setSuccessMsg] = useState(null);
+
+    const deleteAllUserCart = () => {
+
+        setDisplayWarn(true);
+        setCartDataDelete('cartWarn');
 
     }
 
-    const {data , isLoading , isError , refetch} = useQuery('getAllCartElements' , getCartData);
+    useEffect(() => {
+
+        const deleteCartDataDeleteAsync = async() => {
+
+            if(deleteCart){
+
+                setErrMsg(null);
+                setSuccessMsg(null);
+
+                try {
+
+                    const {data} = await Axios.delete(`${AllCartDelete}` , {withCredentials: true});
+
+                    if(data.success){
+
+                        setDisplayWarn(false);
+                        setSuccessMsg(data.message);
+                        setCartDataDelete(null);
+
+                        setTimeout(() => {
+                            setRefetch(!refetch);
+                        }, 3600);
+
+                    }
+
+                } catch (error) {
+                    setErrMsg(error.response?.data?.message || error.message);
+                } finally{
+                    setDeleteCart(null);
+                }
+            }
+
+        }
+
+        deleteCartDataDeleteAsync();
+
+    } , [deleteCart , refetch]);
 
     return <React.Fragment>
+
+        <AnimatePresence>
+            {displayWarn && 
+                <Warning
+                    cancel={setDisplayWarn}
+                    setDeleteData={setDeleteCart}
+                    deleteData={deleteCart}
+                    data={cartDataDelete}
+                />
+            }
+        </AnimatePresence>
+
+        {successMsg ? <Status icon='success' isVisible={visible} visibility={setVisible} data={successMsg} /> : ''}
+        {errMsg ? <Status icon='error' isVisible={visible} visibility={setVisible} data={errMsg} /> : ''}
+
 
         <div className={commonCSS.container}>
 
             <Titles title={' My Cart'} />
 
-            <div className={cartCSS.container}>
-
-                {isLoading ? <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+            {cartLoading ? <div style={{
+                width: '100%', height: '400px',
+                display: 'flex' , alignItems: 'center', justifyContent: 'center'
+            }}>
 
                     <ThreeCircles
                         visible={true} height="50" width="50" color="var(--active-color)"
                         ariaLabel="three-circles-loading" wrapperStyle={{}} wrapperClass=""
                     />
 
-                </div> : (isError ? <div className={errorHandleCSS.empty_doc}>
+                </div> : (cartError ? <div className={cartCSS.empty_cart}>
 
                     <BiErrorAlt />
                     <h3>Error on fetch cart</h3>
 
-                </div> : 
-                (data.data.data.length === 0 ? 'No Data' : (data.data.data.map(book => <CartCard 
-                    key={book._id} refetch={refetch} data={book} 
-                />))))
-                }
+                </div> : <>
 
-            </div>
+                {cartData && cartData.data && cartData.data.length > 0 && <div className={cartCSS.main_det}>
 
-            <div className={cartCSS.main_det}>
+                    <p>Cart Items: <span>{cartData?.data.length} BOOK</span></p>
 
-                {/* <p>Total Price: <span>45000 EGP</span></p> */}
+                    <button onClick={() => deleteAllUserCart()}>Delete the cart</button>
 
-                <Link>Check Out</Link>
+                </div>}
 
-            </div>
+                <div className={cartCSS.container}>
+
+                    {
+                        cartData && cartData.data && cartData.data.length === 0 ? <div className={cartCSS.empty_cart}>
+
+                            <TbShoppingCartX />
+                            <p>Card is empty</p>
+
+                        </div> : (cartData && cartData.data && cartData?.data.map(book => <CartCard 
+                            key={book.bookId._id} data={book} refetch={refetch} reRefetch={setRefetch}
+                        />))
+                    }
+
+                </div>
+
+                <div className={cartCSS.main_det}>
+
+                    <p>Total Cart Price: <span>{cartData?.totalPrice} EGP</span></p>
+
+                    {cartData && cartData.data && cartData.data.length === 0 ? 
+                        <Link to={'/books'}>Go to shopping</Link> : <Link to={'/checkout'}>Check Out</Link>
+                    }
+
+                </div>
+            </>)}
 
         </div>
 

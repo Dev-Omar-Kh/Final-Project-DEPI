@@ -34,3 +34,8 @@ export const CartAdd = 'cart/add';
 export const CartGetAll = 'cart/allProducts';
 export const CartUpdate = 'cart/update';
 export const CartDelete = 'cart/delete';
+export const AllCartDelete = 'cart/deleteAll';
+
+export const OrderCreate = 'order/add';
+export const GetOrdersByUserId = 'order/userOrders';
+export const GetAllOrders = 'order/allOrders';

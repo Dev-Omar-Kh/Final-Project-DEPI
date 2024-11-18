@@ -8,8 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // import FakeDataBooks from '../../../../FakeDataBooks';
 import { Link } from 'react-router-dom';
 import { IoIosArrowForward } from 'react-icons/io';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllBooks } from '../../../../Store/BookSlice';
+import { useSelector } from 'react-redux';
 import { ThreeCircles } from 'react-loader-spinner';
 import { BiErrorAlt } from 'react-icons/bi';
 
@@ -18,14 +17,6 @@ export default function Slider({height}) {
     // ====== fake-data-books ====== //
 
     const {bookLoading , bookError , bookData} = useSelector((store) => store.api);
-
-    const disPatch = useDispatch()
-
-    useEffect(() => {
-
-        disPatch(getAllBooks());
-
-    } , [disPatch]);
 
     const [currentBook, setCurrentBook] = useState(null);
 

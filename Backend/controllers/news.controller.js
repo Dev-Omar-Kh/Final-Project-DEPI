@@ -16,7 +16,7 @@ export const getNews = async (req, res, next) => {
 export const getSingleNews = async (req, res, next) => {
 	const { id } = req.params;
 	try {
-		const news = await News.findById({ _id: id });
+		const news = await News.findById(id);
 		return res.status(200).json({
 			success: true,
 			message: "news fetched",

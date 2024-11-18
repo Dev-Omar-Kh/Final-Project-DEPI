@@ -1,0 +1,174 @@
+.bill{
+
+    width: 100%;
+    margin-block: 50px;
+    border-radius: 5px;
+    border: 2px solid var(--shadow-opacity);
+    overflow: hidden;
+
+}
+
+.bill_title , .bill_total{
+
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--first-text-color);
+
+}
+
+.bill_title svg{
+
+    color: var(--active-color);
+
+}
+
+.order_row{
+
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-top: 2px solid var(--shadow-opacity);
+
+}
+
+.row_title{
+
+    height: 60px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    text-align: center;
+    color: var(--first-text-color);
+
+}
+
+.row_title:nth-child(1),
+.row_title:nth-child(2),
+.row_title:nth-child(3){
+
+    border-right: 1px solid var(--shadow-opacity);
+
+}
+
+.row_title:nth-child(1){
+
+    width: 50%;
+
+}
+.row_title:nth-child(2),
+.row_title:nth-child(3),
+.row_title:nth-child(4){
+
+    width: calc(50% / 3);
+
+}
+
+.bill_total{
+
+    width: 50%;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+
+.bill_total:nth-child(1){
+
+    border-right: 1px solid var(--shadow-opacity);
+
+}
+
+.bill_total svg {
+
+    font-size: 24px;
+    color: var(--active-color);
+
+}
+
+/* ====== responsive-style ====== */
+
+@media(max-width: 905px){
+
+    .row_title:nth-child(1){
+
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--shadow-opacity);
+
+    }
+
+    .row_title:nth-child(2),
+    .row_title:nth-child(3),
+    .row_title:nth-child(4){
+
+        width: calc(100% / 3);
+
+    }
+
+}
+
+@media(max-width: 480px){
+
+    .bill_total {
+    
+        width: 100%;
+        font-size: 16px;
+        font-weight: 500;
+
+    }
+
+    .bill_total:nth-child(1) {
+
+        border-right: none;
+        border-bottom: 1px solid var(--shadow-opacity);
+
+    }
+
+    .bill_total svg {
+
+        font-size: 22px;
+
+    }
+
+}
+
+@media(max-width: 455px){
+
+    .row_title:nth-child(1){
+
+        width: 100%;
+        border-bottom: 1px solid var(--shadow-opacity);
+
+    }
+
+    .row_title:nth-child(4) {
+
+        width: 100%;
+        border-top: 1px solid var(--shadow-opacity);
+
+    }
+
+    .row_title:nth-child(2),
+    .row_title:nth-child(3){
+
+        width: 50%;
+
+    }
+
+    .row_title:nth-child(3){
+
+        border: none;
+
+    }
+
+}
